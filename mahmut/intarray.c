@@ -1,6 +1,9 @@
 #include "intarray.h"
 
-int main(void) {
-    intArray array;
-    return 0;
+void printIntArray(intArray array) {
+    unsigned int i = 0;
+    while (*(array+i) != SENTINEL) {
+        printf("%d ", *(array+i));
+        i++;
+    }
 }
