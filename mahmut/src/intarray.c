@@ -8,3 +8,11 @@ void printIntArray(intArray array) {
         i++;
     }
 }
+
+int getIntArraySize(intArray array) {
+    int i = 1;
+    while (*(array+i) != SENTINEL) {
+        i++;
+    }
+    return i;
+}
