@@ -7,7 +7,7 @@ void printIntArray(const intArray a)
     {
         printf("%d ", *a);
     }
-    printf(" ]\n");
+    printf("]\n");
 }
 
 size_t getIntArraySize(const intArray a)
@@ -26,8 +26,7 @@ bool getIntArray(intArray a)
     size_t t = CAPACITY; // used to prohibit user from entering a list of greater size than CAPACITY
     printf("%s", "Please enter a comma-seperated list of positive integers (e.g. 1,2,3): ");
     scanf("%ts", str);
-    bool strTest = checkCStr(str);
-    if (strTest)
+    if (checkCStr(str))
     {
         extractIntegers(a, str);
         return true;
@@ -62,6 +61,14 @@ bool checkCStr(const char *str)
     return true;
 }
 
-void extractIntegers(intArray a, const char *str)
+void extractIntegers(intArray a, char *str)
 {
+    size_t index = 0;
+    char *strPtr = str;
+    for (; *strPtr != '\0'; str++, index++)
+    {
+        a[index] = strtoul(str, &strPtr, 0);
+        str = strPtr;
+    }
+    a[index] = SENTINEL;
 }
