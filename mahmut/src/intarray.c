@@ -18,23 +18,21 @@ size_t getIntArraySize(const intArray array) {
     return i;
 }
 
-bool isValidString(char str[]) {
-    int ctr = 0, currInt;
-    for(; str[ctr] != '\0'; ctr++) { // loop until null terminator is hit
-        currInt = (int) *(str+ctr); // convert curr string to int
+bool isValidString(char *str) {
+    for(int ctr = 0; *str != '\0'; str++, ctr++) { // loop until null terminator is hit
         if (ctr % 2 == 0) // the first value should be a number, the one after a comma, split in two cases
         {
-            if (currInt < 49 && currInt > 57) // check if currInt is not a number using ASCII, odd numbered index
+            if (!isdigit(*str)) // check if currInt is not a number using isdigit, odd numbered index
             {
                 return false;
             }
         } else {
-            if (currInt != 44) { // check if currInt is not a comma using ASCII, even numbered index
+            if (*str != ',') { // check if currInt is not a comma, even numbered index
                 return false;
             }
         }
     }
-    if ( *(str+ctr-1) == ',') // "1,2,3," is left valid by above, check if ',' is before the sentinel, otherwise valid
+    if ( *(str-1) == ',') // "1,2,3," is left valid by above, check if ',' is before the sentinel, otherwise valid
     {
         return false;
     }
@@ -54,11 +52,9 @@ void extractPositiveInts(intArray array, const char str[]){
 }
 
 bool getIntArray(intArray array) {
-    // prompt user
-    char str[CAPACITY];
+    char str[CAPACITY]; // prompt user
     scanf("%s", &str); 
-    //check validity of input: "ui,ui,ui"
-    if (isValidString(str)) {
+    if (isValidString(str)) { //check validity of input: "ui,ui,ui"
         extractPositiveInts(array, str);
         printIntArray(array);
     } else {
