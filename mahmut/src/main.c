@@ -11,14 +11,13 @@ int main(void) {
     // printf("%u\n", getIntArraySize(arr));
 
     // // task 3
-    // intArray a = {0};
-    // bool b;
-    // printf("Please enter a comma-separated list of positive integers: ");
-    // b = getIntArray(a);
+    intArray a = {0};
+    bool b;
+    printf("Please enter a comma-separated list of positive integers: ");
+    b = getIntArray(a);
 
     // task 4
-    intArray a = {2,6,8,4,5,SENTINEL}, b = {3,4,6,7,9,SENTINEL}, c;
-    appendIntArray(a,b,c);
-    printIntArray(c);
+    // intArray a = {2,6,8,4,5,SENTINEL}, b = {3,4,6,7,9,SENTINEL}, c;
+    // appendIntArray(a,b,c);
     return 0;
 }

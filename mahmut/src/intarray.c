@@ -68,25 +68,25 @@ bool getIntArray(intArray array) {
     }
 }
 
-void appendIntArray(intArray a, intArray b, intArray c) {
-    size_t aInC = getIntArraySize(c) - getIntArraySize(a), abInC = getIntArraySize(c) - getIntArraySize(a) - getIntArraySize(b);
-    int ctrA = 0, ctrB = 0, ctrC = 0;
-    if(abInC > 0) {
-        concatArrays(c, a);
-    } else { // else add as much as possible
-        for(; a[ctrA] != SENTINEL && ctrA < CAPACITY; ctrA++, ctrC++) {
-            c[ctrC] = a[ctrA];
-        }
-    }
-    if (abInC > 0) {
-        concatArrays(c,b);
-    } 
-    else if (abInC == 0) {
-        fprintf( stderr, "A and B are empty"); 
-    } 
-    else { // else add as much as possible
-        for(; b[ctrB] != SENTINEL || (sizeof(a) + ctrB) < CAPACITY; ctrB++, ctrC++) {
-            c[ctrC] = b[ctrB];
-        }
-    }
-}
+// void appendIntArray(intArray a, intArray b, intArray c) {
+//     size_t aInC = getIntArraySize(c) - getIntArraySize(a), abInC = getIntArraySize(c) - getIntArraySize(a) - getIntArraySize(b);
+//     int ctrA = 0, ctrB = 0, ctrC = 0;
+//     if(abInC > 0) {
+//         concatArrays(c, a);
+//     } else { // else add as much as possible
+//         for(; a[ctrA] != SENTINEL && ctrA < CAPACITY; ctrA++, ctrC++) {
+//             c[ctrC] = a[ctrA];
+//         }
+//     }
+//     if (abInC > 0) {
+//         concatArrays(c,b);
+//     } 
+//     else if (abInC == 0) {
+//         fprintf( stderr, "A and B are empty"); 
+//     } 
+//     else { // else add as much as possible
+//         for(; b[ctrB] != SENTINEL || (sizeof(a) + ctrB) < CAPACITY; ctrB++, ctrC++) {
+//             c[ctrC] = b[ctrB];
+//         }
+//     }
+// }
