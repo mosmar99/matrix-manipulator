@@ -70,13 +70,13 @@ bool getIntArray(intArray array) {
 
 void appendIntArray(intArray srs1, intArray srs2, intArray res) {
     int ctr = 0;
-    for(; *srs1 != SENTINEL && (ctr < (CAPACITY-1)); res++, srs1++, ctr++)  // add first source to output given conds
+    for(; *srs1 != SENTINEL && (ctr < (CAPACITY-1)); res++, srs1++, ctr++)  // add first source to output given conds 
         *res = *srs1;
     for(; *srs2 != SENTINEL && (ctr < (CAPACITY-1)); res++, srs2++, ctr++) // add second source to output given conds
         *res = *srs2;
-    *res = SENTINEL;   
+    *res = SENTINEL;     
 }
 
-// void interleaveIntArray(intArray a, intArray b, intArray c) {
-
-// }
+void interleaveIntArray(intArray srs1, intArray srs2, intArray res) {
+   
+}

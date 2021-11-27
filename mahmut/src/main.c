@@ -17,8 +17,13 @@ int main(void) {
     // b = getIntArray(a);
 
     // task 4
-    intArray a = {2,6,8,4,5,SENTINEL}, b = {3,4,6,7,9,SENTINEL}, c;
-    appendIntArray(a,b,c);
+    // intArray a = {2,6,8,4,5,SENTINEL}, b = {3,4,6,7,9,SENTINEL}, c;
+    // appendIntArray(a,b,c);
+    // printIntArray(c);
+
+    // task 5
+    intArray a = {6,7,9,12,SENTINEL}, b = {3,5,6,9,1,2,3,SENTINEL}, c;
+    interleaveIntArray(a,b,c);
     printIntArray(c);
     return 0;
 }
