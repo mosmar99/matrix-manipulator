@@ -80,5 +80,4 @@ void catArrs(intArray res, intArray srs1, intArray srs2)
 
 void appendIntArray(intArray a, intArray b, intArray c) {
     catArrs(c, a, b);  
-    printIntArray(c);
 }
