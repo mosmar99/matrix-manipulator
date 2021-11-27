@@ -68,8 +68,7 @@ bool getIntArray(intArray array) {
     }
 }
 
-void catArrs(intArray res, intArray srs1, intArray srs2)
-{   
+void appendIntArray(intArray srs1, intArray srs2, intArray res) {
     int ctr = 0;
     for(; *srs1 != SENTINEL && (ctr < (CAPACITY-1)); res++, srs1++, ctr++)  // add first source to output given conds
         *res = *srs1;
@@ -78,6 +77,6 @@ void catArrs(intArray res, intArray srs1, intArray srs2)
     *res = SENTINEL;   
 }
 
-void appendIntArray(intArray a, intArray b, intArray c) {
-    catArrs(c, a, b);  
-}
+// void interleaveIntArray(intArray a, intArray b, intArray c) {
+
+// }
