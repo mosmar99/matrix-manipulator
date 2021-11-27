@@ -70,14 +70,15 @@ bool getIntArray(intArray array) {
 
 void catArrs(intArray res, intArray srs1, intArray srs2)
 {   
-    for(; *srs1 != SENTINEL; res++, srs1++) 
+    int ctr = 0;
+    for(; *srs1 != SENTINEL && (ctr < (CAPACITY-1)); res++, srs1++, ctr++) 
         *res = *srs1;
-    for(; *srs2 != SENTINEL; res++, srs2++) 
+    for(; *srs2 != SENTINEL && (ctr < (CAPACITY-1)); res++, srs2++, ctr++) 
         *res = *srs2;
-    *res = SENTINEL;    
+    *res = SENTINEL;   
 }
 
 void appendIntArray(intArray a, intArray b, intArray c) {
-    catArrs(c, a, b); 
+    catArrs(c, a, b);  
     printIntArray(c);
 }
