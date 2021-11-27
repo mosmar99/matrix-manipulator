@@ -38,6 +38,8 @@ bool getIntArray(intArray array);
 // EX1: "1,2,3" -> true | EX2: ",,1,2" -> false
 bool isValidString(char str[]);
 
+// concatenates two arrays, a and b onto c, such as: a = [1,2, SENTINEL], b = [3, SENTINEL]
+// output: --> c = [1,2,3, SENTINEL]
 void appendIntArray(intArray a, intArray b, intArray c);
 
 #endif /* _intarray_h */
