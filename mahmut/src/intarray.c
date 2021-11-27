@@ -71,9 +71,9 @@ bool getIntArray(intArray array) {
 void catArrs(intArray res, intArray srs1, intArray srs2)
 {   
     int ctr = 0;
-    for(; *srs1 != SENTINEL && (ctr < (CAPACITY-1)); res++, srs1++, ctr++) 
+    for(; *srs1 != SENTINEL && (ctr < (CAPACITY-1)); res++, srs1++, ctr++)  // add first source to output given conds
         *res = *srs1;
-    for(; *srs2 != SENTINEL && (ctr < (CAPACITY-1)); res++, srs2++, ctr++) 
+    for(; *srs2 != SENTINEL && (ctr < (CAPACITY-1)); res++, srs2++, ctr++) // add second source to output given conds
         *res = *srs2;
     *res = SENTINEL;   
 }
