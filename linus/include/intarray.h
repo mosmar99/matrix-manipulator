@@ -8,7 +8,7 @@
 #include <string.h>
 
 #define SENTINEL -1
-#define CAPACITY 32
+#define CAPACITY 64
 
 typedef int intArray[CAPACITY];
 
@@ -33,5 +33,15 @@ bool checkCStr(const char *);
 // A helper function to checkCStr(). Extracts all the positive integers to an intArray from a cstring.
 // Function call: extractIntegers({1,2,3}, cstr)
 void extractIntegers(intArray, char *);
+
+// Appends first and second intArray to the third intArray
+// Function call: appendIntArray(a, b, c)
+void appendIntArray(intArray, intArray, intArray);
+
+// intArray c will contain elements from a and b interleaved,
+// i.e. c = {a[0], b[0], a[1], b[1], ...}. Fills remaining space with elements from a or b if
+// they are not of same size.
+// Function call: interleaveIntArray(a, b, c)
+void interleaveIntArray(intArray, intArray, intArray);
 
 #endif
