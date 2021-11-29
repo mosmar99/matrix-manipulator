@@ -10,6 +10,18 @@
 #define SENTINEL -1
 #define CAPACITY 64
 
+enum SortOrder
+{
+    ASC,
+    DEC
+};
+
+enum UniqueValues
+{
+    NO,
+    YES
+};
+
 typedef int intArray[CAPACITY];
 
 // Prints all the elements in an intArray before SENTINEL
@@ -43,5 +55,30 @@ void appendIntArray(intArray, intArray, intArray);
 // they are not of same size.
 // Function call: interleaveIntArray(a, b, c)
 void interleaveIntArray(intArray, intArray, intArray);
+
+// Sorts an intArray given the feedback from user.
+// Function call: sortIntArray(a)
+void sortIntArray(intArray);
+
+// Sets if sorted list should be in ascending or decsending order.
+// Function call: setSortOrder(order)
+void setSortOrder(enum SortOrder);
+
+// Sets if sorted list should contain duplicates.
+// Function call: setUniqueness(unique)
+void setUniqueness(enum UniqueValues);
+
+// Helper function to sortIntArray and reverseIntArray. Swaps two ints.
+// Function call: swap(&a, &b)
+void swap(int *, int *);
+
+// Helper function to sortIntArray, deletes the element at given index and moves rest of
+// the elements 1 step to fill the gap, incl. SENTINEL
+// Function call: deleteElement(a, ix)
+void deleteElement(intArray, size_t);
+
+// Helper function to sortIntArray. Reverses the order of elements in an intArray, excl. SENTINEL.
+// Function call: reverseIntArray(a);
+void reverseIntArray(intArray);
 
 #endif

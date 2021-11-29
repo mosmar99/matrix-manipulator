@@ -1,5 +1,8 @@
 #include "intarray.h"
 
+static enum SortOrder ORDER = ASC;
+static enum UniqueValues UNIQUE = NO;
+
 void printIntArray(const intArray a)
 {
     printf("[");
@@ -126,4 +129,79 @@ void interleaveIntArray(intArray a, intArray b, intArray c)
         }
     }
     c[i] = SENTINEL;
+}
+
+void sortIntArray(intArray a)
+{
+    size_t size = getIntArraySize(a);
+
+    // Bubble sort
+    for (size_t i = 0; i < size - 1; i++)
+    {
+        for (size_t j = 0; j < size - i - 1; j++)
+        {
+            if (a[j] > a[j + 1])
+            {
+                swap(&a[j], &a[j + 1]);
+            }
+        }
+    }
+
+    if (UNIQUE)
+    {
+        for (size_t i = 0; i < size - 1; i++)
+        {
+            if (a[i] == a[i + 1])
+            {
+                deleteElement(a, (i--) + 1);
+                size--;
+            }
+        }
+    }
+
+    if (ORDER)
+    {
+        reverseIntArray(a);
+    }
+}
+
+void setSortOrder(enum SortOrder order)
+{
+    ORDER = order;
+}
+
+void setUniqueness(enum UniqueValues unique)
+{
+    UNIQUE = unique;
+}
+
+void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+void deleteElement(intArray a, size_t ix)
+{
+    size_t size = getIntArraySize(a);
+    if (ix > size)
+    {
+        return;
+    }
+
+    for (; ix < size; ix++)
+    {
+        a[ix] = a[ix + 1];
+    }
+    a[ix] = 0; // not necessary but makes the old SENTINEL to 0
+}
+
+void reverseIntArray(intArray a)
+{
+    size_t size = getIntArraySize(a);
+    for (size_t ix1 = 0, ix2 = size - 1; ix1 < size / 2; ix1++, ix2--)
+    {
+        swap(&a[ix1], &a[ix2]);
+    }
 }

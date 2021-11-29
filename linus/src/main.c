@@ -25,6 +25,31 @@ int main()
     intArray a = {6, 7, 9, 12, SENTINEL}, b = {3, 5, 6, 9, 1, 2, 3, SENTINEL}, c;
     interleaveIntArray(a, b, c);
     printIntArray(c);
+    
+
+    intArray a = {6, 7, 9, 12, 3, 5, 6, 9, 5, 7, 10, 12, SENTINEL};
+    setSortOrder(ASC);
+    setUniqueness(NO);
+    sortIntArray(a);
+    printIntArray(a);
+
+    intArray b = {6, 7, 9, 12, 3, 5, 6, 9, 5, 7, 10, 12, SENTINEL};
+    setSortOrder(ASC);
+    setUniqueness(YES);
+    sortIntArray(b);
+    printIntArray(b);
+
+    intArray c = {6, 7, 9, 12, 3, 5, 6, 9, 5, 7, 10, 12, SENTINEL};
+    setSortOrder(DEC);
+    setUniqueness(NO);
+    sortIntArray(c);
+    printIntArray(c);
+
+    intArray d = {6, 7, 9, 12, 3, 5, 6, 9, 5, 7, 10, 12, SENTINEL};
+    setSortOrder(DEC);
+    setUniqueness(YES);
+    sortIntArray(d);
+    printIntArray(d);
     */
 
     /*
