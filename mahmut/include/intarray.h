@@ -42,4 +42,8 @@ bool isValidString(char str[]);
 // output: --> c = [1,2,3, SENTINEL]
 void appendIntArray(intArray a, intArray b, intArray c);
 
+// takes inputs from array a, puts first element in array c, then takes first element in b and puts it in second element of c
+// continues above until both lists been exhaustive iterated through
+void interleaveIntArray(intArray srs1, intArray srs2, intArray res);
+
 #endif /* _intarray_h */

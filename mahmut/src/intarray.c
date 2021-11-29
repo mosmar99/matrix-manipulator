@@ -78,5 +78,19 @@ void appendIntArray(intArray srs1, intArray srs2, intArray res) {
 }
 
 void interleaveIntArray(intArray srs1, intArray srs2, intArray res) {
-   
+    bool notTwoSentinel = true, srs1Bool = true, srs2Bool = true;
+    int countSentinels = 0;
+    for(; notTwoSentinel; srs1++, srs2++, res++) {
+        if (*srs1 == SENTINEL && srs1Bool) countSentinels++, srs1Bool = false;
+        if (*srs2 == SENTINEL && srs2Bool) countSentinels++, srs2Bool = false;
+        if (countSentinels == 2) notTwoSentinel = false;
+        if(srs1Bool) {
+            *res = *srs1;
+        } 
+        if(srs2Bool) {
+            if(srs1Bool) res++, *res = *srs2;
+            else *res = *srs2;
+        }
+    }
+    *(res-1) = SENTINEL; // since we increment the pointer before checking to end loop
 }

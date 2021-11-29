@@ -22,7 +22,7 @@ int main(void) {
     // printIntArray(c);
 
     // task 5
-    intArray a = {6,7,9,12,SENTINEL}, b = {3,5,6,9,1,2,3,SENTINEL}, c;
+    intArray a = {6,7,9,6,SENTINEL}, b = {3,5,SENTINEL}, c;
     interleaveIntArray(a,b,c);
     printIntArray(c);
     return 0;
