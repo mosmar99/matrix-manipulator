@@ -26,7 +26,6 @@ size_t getIntArraySize(const intArray a)
 bool getIntArray(intArray a)
 {
     char str[CAPACITY];
-    printf("%s", "Please enter a comma-seperated list of positive integers (e.g. 1,2,3): ");
     scanf("%s", str);
     if (checkCStr(str))
     {
@@ -48,8 +47,8 @@ bool checkCStr(const char *str)
     }
 
     for (; *str != '\0'; str++)
-    {
-        if ((*str == ',' && !isdigit(*(str - 1))) || *str == '-') // if the predecessor of a ',' is not a digit OR if a negative sign is detected
+    { // if non-number, only ',' is valid  OR  if a ',' is not precessed by a digit
+        if ((!isdigit(*str) && *str != ',') || (*str == ',' && !isdigit(*(str - 1))))
         {
             return false;
         }
@@ -69,7 +68,7 @@ void extractIntegers(intArray a, char *str)
     char *strPtr = str;
     for (; *strPtr != '\0'; str++, index++)
     {
-        a[index] = strtoul(str, &strPtr, 0);
+        a[index] = strtoul(str, &strPtr, 0); // no need to check if strtoul returns 0 since str is already verified
         str = strPtr;
     }
     a[index] = SENTINEL;
@@ -134,7 +133,6 @@ void interleaveIntArray(intArray a, intArray b, intArray c)
 void sortIntArray(intArray a)
 {
     size_t size = getIntArraySize(a);
-
     // Bubble sort
     for (size_t i = 0; i < size - 1; i++)
     {
