@@ -1,6 +1,7 @@
 #ifndef _FMATRIX_H
 #define _FMATRIX_H
 
+#define SIZE 256
 #define ROWS 3
 #define COLS 3
 
@@ -36,7 +37,7 @@ bool checkCStrMatrix(char *);
 bool checkCStrMatrixSubstr(const char *);
 
 // Helper funktion to getMatrix(). Extracts all floats from a cstr to an fMatrix.
-// Function call: extractFloats(matrix, cstr);
-void extractFloats(fMatrix, char *);
+// Function call: extractFloats(&matrix, cstr);
+void extractFloats(fMatrix *, char *);
 
 #endif

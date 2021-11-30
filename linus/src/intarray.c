@@ -25,7 +25,7 @@ size_t getIntArraySize(const intArray a)
 
 bool getIntArray(intArray a)
 {
-    char str[CAPACITY];
+    char str[CAPACITY - 1];
     scanf("%s", str);
     if (checkCStr(str))
     {
