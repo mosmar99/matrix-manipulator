@@ -56,7 +56,7 @@ void extractPositiveInts(intArray array, const char str[]){
 bool getIntArray(intArray array) {
     // prompt user
     char str[CAPACITY];
-    scanf("%s", str); 
+    scanf("%63s", str); 
     //check validity of input: "ui,ui,ui"
     if (isValidString(str)) {
         extractPositiveInts(array, str);
@@ -94,3 +94,7 @@ void interleaveIntArray(intArray srs1, intArray srs2, intArray res) {
     }
     *(res-1) = SENTINEL; // since we increment the pointer before checking to end loop
 }
+
+// void sortArray(intArray arr) {
+
+// }

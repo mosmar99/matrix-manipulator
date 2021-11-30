@@ -20,6 +20,16 @@
 #define SENTINEL -1
 #define CAPACITY 64
 
+enum arrayOrder {
+    ASC,
+    DESC
+};
+
+enum arrRemoveDuplicates {
+    NO,
+    YES
+};
+
 typedef int intArray[CAPACITY];
 
 // inputs: 1D-array, outputs: prints the array to stdin in format [ el1 el2 .. eln ]'
