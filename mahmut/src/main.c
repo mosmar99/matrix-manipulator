@@ -1,17 +1,17 @@
 #include "intarray.h"
 #include "fmatrix.h"
 
-bool isValidFloatString(char *str) {
-    char* token = strtok(str, ",");
-    while (token) {
-        printf("token: %s\n", token);
-    }
-    return true;
-}
+// bool isValidFloatString(char *str) {
+//     char* token = strtok(str, ",");
+//     while (token) {
+//         printf("token: %s\n", token);
+//     }
+//     return true;
+// }
 
 
 int main(void) {
-    isValidFloatString("12312,123,23,551,2,44");
+    // isValidFloatString("12312,123,23,551,2,44");
 
     // ----- PART 1 -----
     // task 1
@@ -45,9 +45,9 @@ int main(void) {
     // sortIntArray(a); printIntArray(a);
 
     // ----- PART 2 -----
-    // fMatrix *m = createMatrix(0.0f); 
-    // printMatrix(m);
-    // destroyMatrix(m);
+    fMatrix *m = createMatrix(3.43f); 
+    printMatrix(m);
+    destroyMatrix(m);
     // getMatrix(m);
 
 }

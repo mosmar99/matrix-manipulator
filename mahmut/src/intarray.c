@@ -95,6 +95,7 @@ void interleaveIntArray(intArray srs1, intArray srs2, intArray res) {
     *(res-1) = SENTINEL; // since we increment the pointer before checking to end loop
 }
 
-// void sortArray(intArray arr) {
+void sortArray(intArray arr) {
+    
 
-// }
+}

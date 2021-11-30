@@ -17,7 +17,7 @@ fMatrix* createMatrix(float value) {
     {
         for (int j = 0; j < COLS; j++)
         {
-            *mat[i][j] = value;
+            *(*(*mat+j)+i) = value;
         }
     }
 
@@ -25,17 +25,16 @@ fMatrix* createMatrix(float value) {
 }
 
 void printMatrix(fMatrix *mat){
-    int i=0,j=0;
-    for(i=0; i<ROWS; i++){    /* Iterate of each row */
-        for(j=0; j<COLS; j++){  /* In each row, go over each col element  */
-            printf("%.2lf ",*mat[i][j]); /* Print each row element */
+    for(int i=0; i<ROWS; i++){    /* Iterate of each row */
+        for(int j=0; j<COLS; j++){  /* In each row, go over each col element  */
+            printf("%.2lf ",*(*(*mat+j)+i)); /* Print each row element */
         }
         printf("\n");
     }
 }
 
 void destroyMatrix(fMatrix *mat){
-    free(mat);
+    if(mat != NULL) free(mat), mat = NULL;
 }
 
 // int isfloat (const char *s)
