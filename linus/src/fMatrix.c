@@ -39,7 +39,7 @@ void printMatrix(const fMatrix const *m)
     {
         for (size_t c = 0; c < COLS; c++)
         {
-            printf(" %.2f ", *m[r][c]);
+            printf("%8.2f", *m[r][c]);
         }
         printf("\n");
     }
@@ -47,11 +47,13 @@ void printMatrix(const fMatrix const *m)
 
 bool getMatrix(fMatrix *m)
 {
-    char str[SIZE - 1];
+    char str[SIZE - 1] = {0};
     scanf("%s", str);
+    char originalStr[SIZE - 1] = {0}; // all the ',' in str gets set to '\0' for some reason, messes with extractFloats()
+    copyStr(originalStr, str);        // copies the str entered by user
     if (checkCStrMatrix(str))
     {
-        extractFloats(m, str);
+        extractFloats(m, originalStr);
         return true;
     }
     else
@@ -62,12 +64,12 @@ bool getMatrix(fMatrix *m)
 
 bool checkCStrMatrix(char *str)
 {
-    if (*str == ',' || *str == '.') // checks the first element
+    size_t size = strlen(str);
+    if (*str == ',' || *str == '.' || str[size - 1] == ',' || str[size - 1] == '.') // checks first and last element
     {
         return false;
     }
 
-    size_t size = strlen(str);
     for (size_t i = 1; i < size - 1; i++) // initial check for dual commas
     {
         if (str[i] == ',' && str[i + 1] == ',') // "1,2,,3" counts as 3 tokens, not 4, hence this loop is needed
@@ -78,47 +80,81 @@ bool checkCStrMatrix(char *str)
 
     size_t tokenCount = 0;
     char *token = strtok(str, ",");
-    while (token)
+    while (token) // extract all tokens and check them one by one
     {
         tokenCount++;
-        printf("token: %s\n", token);
-        if (!checkCStrMatrixSubstr(token)) // check each token
+        if (!checkCStrMatrixToken(token)) // check each token
         {
             return false;
         }
         token = strtok(NULL, ",");
     }
 
-    if (str[size] == ',' || str[size] == '.' || tokenCount != ROWS * COLS) // checks the last element before SENTINEL
-    {                                                                      // and if there is correct # of floats
+    if (tokenCount != ROWS * COLS) // and if there is correct # of floats
+    {
         return false;
     }
-
     return true;
 }
 
-bool checkCStrMatrixSubstr(const char *str) // a token will never contain ','
+bool checkCStrMatrixToken(const char *str) // a token will never contain ','
 {
-    size_t dotCounter = 0; 
+    size_t size = strlen(str);
+    if (*str == '.' || str[size - 1] == '.') // checks the first and last element
+    {
+        return false;
+    }
+
+    size_t dotCounter = 0;
     for (; *str != '\0'; str++)
     {
         if (*str == '.')
         {
             dotCounter++;
+            if (dotCounter > 1)
+            {
+                return false;
+            }
         }
-
-        if ((!isdigit(*str) && (*str != '.')) || ((*str == '.') && !isdigit(*(str - 1))))
+        // if non-digit, only '.' is valid             a '.' must be surrounded by a digit on both sides
+        if ((!isdigit(*str) && (*str != '.')) || ((*str == '.') && (!isdigit(*(str - 1)) || !isdigit(*(str + 1)))))
         {
             return false;
         }
-    }
-    if (dotCounter > 1)
-    {
-        return false;
     }
     return true;
 }
 
 void extractFloats(fMatrix *m, char *str)
 {
+    size_t index = 0;                       // 0 1 2   -> 0
+    char *strPtr = str;                     // 3 4 5   -> 1
+    for (; *strPtr != '\0'; str++, index++) // 6 7 8   -> 2
+    {
+        switch (index)
+        {
+        case 0:
+        case 1:
+        case 2:
+            *m[0][index] = strtod(str, &strPtr); // no need to check if strtod returns 0 since str is already verified
+            break;
+        case 3:
+        case 4:
+        case 5:
+            *m[1][index % 3] = strtod(str, &strPtr);
+            break;
+        default: // 6, 7, 8
+            *m[2][index % 3] = strtod(str, &strPtr);
+            break;
+        }
+        str = strPtr;
+    }
+}
+
+void copyStr(char *dest, char *src)
+{
+    for (; *src != '\0'; src++, dest++)
+    {
+        *dest = *src;
+    }
 }

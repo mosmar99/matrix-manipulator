@@ -34,10 +34,16 @@ bool checkCStrMatrix(char *);
 
 // Helper function to checkCStrMatrix(). Checks each token.
 // Function call: checkCStrMatrixSubstr(cstr)
-bool checkCStrMatrixSubstr(const char *);
+bool checkCStrMatrixToken(const char *);
 
 // Helper funktion to getMatrix(). Extracts all floats from a cstr to an fMatrix.
 // Function call: extractFloats(&matrix, cstr);
 void extractFloats(fMatrix *, char *);
+
+// Helper function to getMatrix(). Copies a string to another (both located on stack. strcpy() ==> ROM ==> Segmentation fault)
+// dest and src MUST be of same length and dest static initialized as per char dest[size] = {0}
+// Not intended to be used outside of this specific use case as described above.
+// Function call: copyStr(dest, src)
+void copyStr(char *, char *);
 
 #endif
