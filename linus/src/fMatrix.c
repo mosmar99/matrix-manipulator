@@ -1,6 +1,6 @@
 #include "fMatrix.h"
 
-fMatrix *createMatrix(float f)
+fMatrix *createMatrix(const float f)
 {
     fMatrix *m = (fMatrix *)calloc(ROWS * COLS, sizeof(float));
     if (m == NULL)
@@ -13,7 +13,7 @@ fMatrix *createMatrix(float f)
     {
         for (size_t c = 0; c < COLS; c++)
         {
-            *(m[r][c]) = f;
+            *m[r][c] = f;
         }
     }
     return m;
@@ -157,4 +157,41 @@ void copyStr(char *dest, char *src)
     {
         *dest = *src;
     }
+}
+
+void matadd(fMatrix *a, fMatrix *b)
+{
+    for (size_t r = 0; r < ROWS; r++)
+    {
+        for (size_t c = 0; c < COLS; c++)
+        {
+            *a[r][c] += *b[r][c];
+        }
+    }
+}
+
+void matmul(fMatrix *a, fMatrix *b)
+{
+    size_t row = 0;
+    for (size_t ix = 0; ix < ROWS * COLS; ix++)
+    {
+        size_t col = ix % 3;
+
+        *a[row][col] = rowColAdd(a, b, row, col);
+
+        if (col == 2)
+        {
+            row++;
+        }
+    }
+}
+
+float rowColAdd(const fMatrix const *a, const fMatrix const *b, const size_t row, const size_t col)
+{
+    float sum = 0;
+    for (size_t ix = 0; ix < 3; ix++)
+    {
+        sum += *a[row][ix] * *b[ix][col];
+    }
+    return sum;
 }
