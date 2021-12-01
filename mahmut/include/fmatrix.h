@@ -9,10 +9,9 @@
 #include <stddef.h>
 #include <errno.h>
 
-#define ROWS 3
-#define COLS 3
-#define ARRSIZE ROWS*COLS
-#define SIZE 128
+#define ROWS 3 // rows of matrix
+#define COLS 3 // columns of matrix
+#define SIZE 128 // used for allocating memory when reading float string 
 
 typedef float fMatrix[ROWS][COLS];
 
@@ -27,5 +26,11 @@ void destroyMatrix(fMatrix *mat);
 
 // gets valid input for matrix, returns boolean if successful
 bool getMatrix(fMatrix *mat);
+
+// adds matrix_1 and matrix_2 elementwise, stores the res in matrix1
+void matadd(fMatrix *mat1, fMatrix *mat2);
+
+// matrix multiply intArray m1 and intArray m2, stores the result in m1
+void matmul(fMatrix *m1, fMatrix *m2);
 
 #endif              

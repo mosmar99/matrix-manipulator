@@ -1,5 +1,8 @@
 #include "intarray.h"
 
+static enum SortOrder sortOrder = ASCENDING;
+static enum Uniqueness uniqueness = NONUNIQUE;
+
 void printIntArray(const intArray array) {
     printf("[ ");
     int i = 0;
@@ -18,37 +21,34 @@ size_t getIntArraySize(const intArray array) {
     return i;
 }
 
-bool isValidString(char *str) {
-    for(int ctr = 0; str != '\0'; str++, ctr++) { // loop until null terminator is hit
-        if (ctr % 2 == 0) // the first value should be a number, the one after a comma, split in two cases
-        {
-            if (!isdigit(str)) // check if currInt is not a number using isdigit, odd numbered index
-            {
-                return false;
-            }
-        } else {
-            if (*str != ',') { // check if currInt is not a comma, even numbered index
-                return false;
-            }
-        }
-    }
-    if ( *(str-1) == ',') // "1,2,3," is left valid by above, check if ',' is before the sentinel, otherwise valid
+bool isValidIntString(char *str) {
+    char cpydStr[CAPACITY];
+    strncpy(cpydStr, str, CAPACITY);
+    size_t size = strlen(cpydStr);
+    if ( *cpydStr == ',' || *cpydStr == '.' || cpydStr[size - 1] == ',' || 
+        cpydStr[size - 1] == '.'|| strstr(cpydStr, ",,") != NULL) return false;
+    char *token = strtok(cpydStr, ",");
+    while (token)
     {
-        return false;
+        int tmp;
+        if (sscanf(token, "%d", &tmp) != 1) return false;
+        if (sscanf(token, "%d", &tmp) == 1) {
+            int tmp2 = atoi(token);
+            if(tmp2 <= 0) return false; }
+        token = strtok(NULL, ",");
     }
-    return true;
+    return true;    
 }
 
-void extractPositiveInts(intArray array, const char str[]){
-    int ctr = 0, arrIdx = 0;
-    for(; str[ctr] != '\0'; ctr++) {
-        if (ctr % 2 == 0)
-        {
-            array[arrIdx] = (int) str[ctr] - 48; // convert from string to ASCII then to int values
-            arrIdx++;
-        }
+void extractPositiveInts(intArray array, char str[]){
+    size_t index = 0;
+    char *strPtr = str;
+    for (; *strPtr != '\0'; str++, index++)
+    {
+        array[index] = strtoul(str, &strPtr, 10); // no need to check if strtoul returns 0 since str is already verified
+        str = strPtr;
     }
-    array[arrIdx] = SENTINEL; 
+    array[index] = SENTINEL;
 }
 
 bool getIntArray(intArray array) {
@@ -56,13 +56,13 @@ bool getIntArray(intArray array) {
     char str[CAPACITY];
     scanf("%63s", str); 
     //check validity of input: "ui,ui,ui"
-    if (isValidString(str)) {
+    if (isValidIntString(str)) {
         extractPositiveInts(array, str);
         printIntArray(array);
     } else {
         array[0] = SENTINEL;
         printIntArray(array);
-        return isValidString(str);
+        return isValidIntString(str);
     }
 }
 
@@ -93,7 +93,95 @@ void interleaveIntArray(intArray srs1, intArray srs2, intArray res) {
     *(res-1) = SENTINEL; // since we increment the pointer before checking to end loop
 }
 
-void sortArray(intArray arr) {
-    
+// Swapping algorithm
+void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
 
+// Partitioning algorithm
+int partition(int *L, int left, int right)
+{
+    int pivot = left;
+    int p_val = L[pivot];
+
+    while (left < right)
+    {
+        while (L[left] <= p_val)
+            left++;
+        while (L[right] > p_val)
+            right--;
+        if (left < right)
+            swap(&L[left], &L[right]);
+    }
+    swap(&L[pivot], &L[right]);
+    return right;
+}
+
+// Quicksort recursion
+void quicksort(int *L, int start, int end)
+{
+    if (start >= end)
+        return;
+    //dump_list("PRE-PARTITION", L, start, end);
+    int splitPoint = partition(L, start, end);
+    //dump_list("POST-PARTITION", L, start, end);
+    //printf("Split point: %d\n", splitPoint);
+    quicksort(L, start, splitPoint - 1);
+    quicksort(L, splitPoint + 1, end);
+}
+
+void setSortOrder(enum SortOrder orderChoice) {
+    sortOrder = orderChoice;
+}
+
+void setUniqueness(enum Uniqueness uniquenessChoice) {
+    uniqueness = uniquenessChoice;
+}
+
+void deleteDuplicate(intArray arr, int size) {  
+    int i, j, k;       // Loop control variables: k = size of new arr, i & j = loop vars
+    for(i=0; i<size; i++)
+    {
+        for(j=i+1; j<size; j++)
+        {
+            /* If any duplicate found */
+            if(arr[i] == arr[j])
+            {
+                /* Delete the current duplicate element */
+                for(k=j; k < size; k++)
+                {
+                    arr[k] = arr[k + 1];
+                }
+
+                /* Decrement size after removing duplicate element */
+                size--;
+
+                /* If shifting of elements occur then don't increment j */
+                j--;
+            }
+        }
+    }  
+    if(sortOrder == ASCENDING) *(arr+k-1) = SENTINEL; 
+    else *(arr+k) = SENTINEL; 
+}  
+
+void reverseArray(int arr[], int size)
+{
+    for (int i = 0; i < size/2; i++)
+    {
+        int temp = arr[i];
+        arr[i] = arr[size - i];
+        arr[size - i] = temp;
+    }
+}
+
+void sortIntArray(intArray arr) {
+    size_t size = getIntArraySize(arr) - 1;
+    quicksort(arr, 0, size);
+
+    if(sortOrder) reverseArray(arr, size);
+    if(uniqueness) deleteDuplicate(arr, size);
 }

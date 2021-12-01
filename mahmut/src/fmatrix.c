@@ -17,7 +17,7 @@ fMatrix* createMatrix(float value) {
     {
         for (int j = 0; j < COLS; j++)
         {
-            *(*(*mat+j)+i) = value;
+            *(*(*mat+i)+j) = value;
         }
     }
 
@@ -25,9 +25,10 @@ fMatrix* createMatrix(float value) {
 }
 
 void printMatrix(fMatrix *mat){
+
     for(int i=0; i<ROWS; i++){    /* Iterate of each row */
         for(int j=0; j<COLS; j++){  /* In each row, go over each col element  */
-            printf("%.2lf ",*(*(*mat+j)+i)); /* Print each row element */
+            printf("%8.2lf ",*(*(*mat+i)+j)); /* Print each row element */
         }
         printf("\n");
     }
@@ -37,37 +38,77 @@ void destroyMatrix(fMatrix *mat){
     if(mat != NULL) free(mat), mat = NULL;
 }
 
-// int isfloat (const char *s)
-// {
-//      char *ep = NULL;
-//      double f = strtod (s, &ep);
+bool isValidFloatString(char *str)
+{
+    char cpydStr[SIZE];
+    strncpy(cpydStr, str, SIZE);
+    size_t size = strlen(cpydStr);
+    if ( *cpydStr == ',' || *cpydStr == '.' || cpydStr[size - 1] == ',' || 
+        cpydStr[size - 1] == '.'|| strstr(cpydStr, ",,") != NULL) return false;
+    char *token = strtok(cpydStr, ",");
+    while (token)
+    {
+        float tmp;
+        if (sscanf(token, "%f", &tmp) != 1)
+            return false;
+        token = strtok(NULL, ",");
+    }
+    return true;
+}
 
-//      if (!ep  ||  *ep)
-//          return false;  // has non-floating digits after number, if any
+void extractPositiveFloats(fMatrix *mat, char *str) {
+    char *token = strtok(str, ",");
+    for (size_t i = 0; i < ROWS && token; i++)
+    {
+        for (size_t j = 0; j < COLS; j++)
+        {
+            *(*(*mat+i)+j) = atof(token);
+            token = strtok(NULL, ",");
+        }
+    }  
+}
 
-//      return true;
-// }
+bool getMatrix(fMatrix *mat) {
+    // prompt user
+    char str[SIZE];
+    scanf("%127s", str); 
+    //check validity of input: "ui,ui,ui"
+    if (isValidFloatString(str)) {
+        extractPositiveFloats(mat, str);
+        return true;
+    } else {
+        return false;
+    }    
+}
 
-// bool isValidFloatString(char *str) {
-//     char* token = strtok(str, ",");
-//     while (token) {
-//         printf("token: %s\n", token);
-//     }
-//     return true;
-// }
+void matadd(fMatrix *mat1, fMatrix *mat2) {
+    for (size_t i = 0; i < ROWS; i++)
+    {
+        for (size_t j = 0; j < COLS; j++)
+        {
+            (*mat1)[i][j] += (*mat2)[i][j];
+        }    
+    }
+}
 
-// void extractPositiveFloats(fMatrix *mat, char *str) {
+void matmul(fMatrix *m1, fMatrix *m2) {
+    fMatrix *rslt = createMatrix(0.0f);
+ 
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLS; j++) {
+            ((*rslt)[i][j]) = 0;
+ 
+            for (int k = 0; k < ROWS; k++) {
+                ((*rslt)[i][j]) += ((*m1)[i][k]) * ((*m2)[k][j]);
+            }
+        }
+    }
 
-// }
-
-// bool getMatrix(fMatrix *mat) {
-//     // prompt user
-//     char str[SIZE];
-//     scanf("%127s", str); 
-//     //check validity of input: "ui,ui,ui"
-//     if (isValidFloatString(str)) {
-//         extractPositiveFloats(mat, str);
-//     } else {
-//         return isValidString(str);
-//     }    
-// }
+    for (size_t i = 0; i < ROWS; i++)
+    {
+        for (size_t j = 0; j < COLS; j++)
+        {
+            (*m1)[i][j] = (*rslt)[i][j];
+        }    
+    }    
+}
