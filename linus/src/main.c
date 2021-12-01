@@ -70,8 +70,8 @@ int main()
     printf("\n%s\n%s\n", dest, src);
     */
 
-    fMatrix *a = createMatrix(0.0f);
-    fMatrix *b = createMatrix(0.0f);
+    fMatrix *a = createMatrix(1.5f);
+    //fMatrix *b = createMatrix(1.5f);
 
     /*printf("%s", "Please enter a comma-seperated list of 9 floats: ");
     getMatrix(a);

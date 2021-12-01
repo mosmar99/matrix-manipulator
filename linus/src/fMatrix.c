@@ -2,8 +2,20 @@
 
 fMatrix *createMatrix(const float f)
 {
-    fMatrix *m = (fMatrix *)calloc(ROWS * COLS, sizeof(float));
-    if (m == NULL)
+    void *ptr = malloc(ROWS * COLS * sizeof(float)); // allocate memory for 3x3 grid of floats
+    printf("float size: %u\n", sizeof(float));
+    printf("Number of bytes: %u\n", ROWS * COLS * sizeof(float));
+    fMatrix *m = (fMatrix *)ptr;
+    for (size_t r = 0; r < ROWS; r++)
+    {
+        for (size_t c = 0; c < COLS; c++)
+        {
+            printf("m[%d][%d] = %#p\n", r, c, m[r][c]);
+        }
+        printf("\n");
+    }
+
+    /*if (m == NULL)
     {
         puts("Error: failed to allocate memory.");
         return NULL;
@@ -16,7 +28,7 @@ fMatrix *createMatrix(const float f)
             *m[r][c] = f;
         }
     }
-    return m;
+    return m;*/
 }
 
 void destroyMatrix(fMatrix *m)
