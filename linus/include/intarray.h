@@ -8,7 +8,7 @@
 #include <string.h>
 
 #define SENTINEL -1
-#define CAPACITY 64
+#define CAPACITY 256
 
 enum SortOrder
 {
