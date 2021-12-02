@@ -1,90 +1,131 @@
 #include "intarray.h"
 #include "fMatrix.h"
 
+void printMenu();
+void applyChoice(unsigned short);
+void doAppIntArrays();
+void doIntlevIntArrays();
+void doSortIntarray();
+void doMatAdd();
+void doMatMul();
+
 int main()
 {
-    /*
-    char str[SIZE] = "1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9"; // valid
-    printf("%d\n", checkCStrMatrix(str));
+    unsigned short choice = 0;
+    printMenu();
+    while (choice != 7)
+    {
+        printf("\n?: ");
+        fflush(stdin);
+        scanf("%1d[1234567]", &choice);
+        applyChoice(choice);
+    }
+}
 
-    char str1[SIZE] = "1.1,22.,3.3,4.4,5.5,6.6,7.7,8.8,9.9"; // a token ends in '.'
-    printf("%d\n", checkCStrMatrix(str1));
+void printMenu()
+{
+    puts("== Main Menu ==");
+    puts("1. Append two integer arrays.");
+    puts("2. Interleave two integer arrays.");
+    puts("3. Sort an integer array.");
+    puts("4. Add two 3x3 float matrices.");
+    puts("5. Multiply two 3x3 float matrices.");
+    puts("6. Print Main Menu.");
+    puts("7. Quit.");
+}
 
-    char str2[SIZE] = "1.1,2..2,3.3,4.4,5.5,6.6,7.7,8.8,9.9"; // two '.'
-    printf("%d\n", checkCStrMatrix(str2));
+void applyChoice(unsigned short choice)
+{
+    switch (choice)
+    {
+    case 1:
+        doAppIntArrays();
+        break;
+    case 2:
+        doIntlevIntArrays();
+        break;
+    case 3:
+        doSortIntarray();
+        break;
+    case 4:
+        doMatAdd();
+        break;
+    case 5:
+        doMatMul();
+        break;
+    case 6:
+        printMenu();
+        break;
+    default:
+        puts("Error: invalid choice");
+        break;
+    }
+}
 
-    char str3[SIZE] = "1.1,.22,3.3,4.4,5.5,6.6,7.7,8.8,9.9"; // leading '.'
-    printf("%d\n", checkCStrMatrix(str3));
-
-    char str4[SIZE] = "1.1,2.2,3.3,4.4,5a.5,6.6,7.7,8.8,9.9"; // a non-number char
-    printf("%d\n", checkCStrMatrix(str4));
-
-    char str5[SIZE] = "1.1,2.2,3.3,4.4,,5.5,6.6,7.7,8.8,9.9"; // two ','
-    printf("%d\n", checkCStrMatrix(str5));
-
-    char str6[SIZE] = "1.1,2.2,3.3,4.4,6.6,7.7,8.8,9.9"; // only 8 floats (missing one)
-    printf("%d\n", checkCStrMatrix(str6));
-
-    char str7[SIZE] = "1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,10.10"; // 10 floats (one extra)
-    printf("%d\n", checkCStrMatrix(str7));
-
-    char str8[SIZE] = ",1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9"; // leading ',' in the very beginning
-    printf("%d\n", checkCStrMatrix(str8));
-
-    char str9[SIZE] = "1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9,"; // trailing ',' at very end
-    printf("%d\n", checkCStrMatrix(str9));
-
-    char str10[SIZE] = ".1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9"; // leading '.' in the very beginning
-    printf("%d\n", checkCStrMatrix(str10));
-
-    char str11[SIZE] = "1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9."; // trailing '.' at very end
-    printf("%d\n", checkCStrMatrix(str11));
-    */
-
-    /*
-    fMatrix *m = createMatrix(0.0f);
-    printMatrix(m);
-    char str[SIZE] = "1.1,2.2,3.3,4.4,5.5,6.6,7.7,8.8,9.9";
-    extractFloats(m, str);
-    printf("\n");
-    printMatrix(m);
-    */
-
-    /*
-    fMatrix *m = createMatrix(0.0f);
-    printMatrix(m);
-    printf("%s", "Please enter a comma-seperated list of 9 floats: ");
-    getMatrix(m);
-    printMatrix(m);
-
-    printf("%s", "Please enter a comma-seperated list of 9 floats: ");
-    getMatrix(m);
-    printMatrix(m);
-    */
-
-    /*
-    char dest[SIZE] = {0};
-    char src[SIZE] = "hejsan";
-    printf("%s\n%s\n", dest, src);
-    copyStr(dest, src);
-    printf("\n%s\n%s\n", dest, src);
-    */
-
-    fMatrix *a = createMatrix(1.5f);
-    //fMatrix *b = createMatrix(1.5f);
-
-    /*printf("%s", "Please enter a comma-seperated list of 9 floats: ");
-    getMatrix(a);
-    printMatrix(a);
-    
-    printf("%s", "Please enter a comma-seperated list of 9 floats: ");
-    getMatrix(b);
-    printMatrix(b);
-
-    matadd(a, b);
+void doAppIntArrays()
+{
+    intArray srs1, srs2, res;
+    printf("Enter first array: ");
+    getIntArray(srs1);
+    printf("Enter second array: ");
+    getIntArray(srs2);
     printf("Result:\n");
-    printMatrix(a);
+    appendIntArray(srs1, srs2, res);
+    printIntArray(res);
+}
 
-    destroyMatrix(a);
-    destroyMatrix(b);*/
+void doIntlevIntArrays()
+{
+    intArray srs1, srs2, res;
+    printf("Enter first array: ");
+    getIntArray(srs1);
+    printf("Enter second array: ");
+    getIntArray(srs2);
+    printf("Result:\n");
+    interleaveIntArray(srs1, srs2, res);
+    printIntArray(res);
+}
+
+void doSortIntarray()
+{
+    intArray arr;
+    unsigned int order, unique;
+    printf("Enter array: ");
+    getIntArray(arr);
+    printf("Enter Sort order (%d) ASC, (%d) DESC: ", 0, 1);
+    scanf("%u", &order);
+    setSortOrder(order);
+    printf("Unique values (%d) No, (%d) Yes: ", 0, 1);
+    scanf("%u", &unique);
+    setUniqueness(unique);
+    sortIntArray(arr);
+    printIntArray(arr);
+}
+
+void doMatAdd()
+{
+    fMatrix *m1 = createMatrix(0.0f), *m2 = createMatrix(0.0f);
+    printf("Please enter a comma-separated list of 9 floats: ");
+    getMatrix(m1);
+    printf("Please enter a comma-separated list of 9 floats: ");
+    getMatrix(m2);
+    matadd(m1, m2);
+    printf("Result:\n");
+    printMatrix(m1);
+    destroyMatrix(m1);
+    destroyMatrix(m2);
+}
+
+void doMatMul()
+{
+    fMatrix *m1 = createMatrix(0.0f), *m2 = createMatrix(0.0f);
+    printf("Please enter a comma-separated list of 9 floats: ");
+    getMatrix(m1);
+    printf("Please enter a comma-separated list of 9 floats: ");
+    getMatrix(m2);
+    matmul(m1, m2);
+    printf("Result:\n");
+    printMatrix(m1);
+    destroyMatrix(m1);
+    destroyMatrix(m2);
 }

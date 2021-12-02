@@ -2,20 +2,8 @@
 
 fMatrix *createMatrix(const float f)
 {
-    void *ptr = malloc(ROWS * COLS * sizeof(float)); // allocate memory for 3x3 grid of floats
-    printf("float size: %u\n", sizeof(float));
-    printf("Number of bytes: %u\n", ROWS * COLS * sizeof(float));
-    fMatrix *m = (fMatrix *)ptr;
-    for (size_t r = 0; r < ROWS; r++)
-    {
-        for (size_t c = 0; c < COLS; c++)
-        {
-            printf("m[%d][%d] = %#p\n", r, c, m[r][c]);
-        }
-        printf("\n");
-    }
-
-    /*if (m == NULL)
+    fMatrix *m = calloc(ROWS * COLS, sizeof(float));
+    if (m == NULL)
     {
         puts("Error: failed to allocate memory.");
         return NULL;
@@ -25,10 +13,10 @@ fMatrix *createMatrix(const float f)
     {
         for (size_t c = 0; c < COLS; c++)
         {
-            *m[r][c] = f;
+            (*m)[r][c] = f;
         }
     }
-    return m;*/
+    return m;
 }
 
 void destroyMatrix(fMatrix *m)
@@ -51,7 +39,7 @@ void printMatrix(const fMatrix const *m)
     {
         for (size_t c = 0; c < COLS; c++)
         {
-            printf("%8.2f", *m[r][c]);
+            printf("%8.2f", *(*(*m + r) + c));
         }
         printf("\n");
     }
@@ -148,15 +136,15 @@ void extractFloats(fMatrix *m, char *str)
         case 0:
         case 1:
         case 2:
-            *m[0][index] = strtod(str, &strPtr); // no need to check if strtod returns 0 since str is already verified
+            (*m)[0][index] = strtod(str, &strPtr); // no need to check if strtod returns 0 since str is already verified
             break;
         case 3:
         case 4:
         case 5:
-            *m[1][index % 3] = strtod(str, &strPtr);
+            (*m)[1][index % 3] = strtod(str, &strPtr);
             break;
         default: // 6, 7, 8
-            *m[2][index % 3] = strtod(str, &strPtr);
+            (*m)[2][index % 3] = strtod(str, &strPtr);
             break;
         }
         str = strPtr;
@@ -177,23 +165,32 @@ void matadd(fMatrix *a, fMatrix *b)
     {
         for (size_t c = 0; c < COLS; c++)
         {
-            *a[r][c] += *b[r][c];
+            (*a)[r][c] += (*b)[r][c];
         }
     }
 }
 
 void matmul(fMatrix *a, fMatrix *b)
 {
+    fMatrix *result = createMatrix(0.0f);
     size_t row = 0;
     for (size_t ix = 0; ix < ROWS * COLS; ix++)
     {
         size_t col = ix % 3;
 
-        *a[row][col] = rowColAdd(a, b, row, col);
+        (*result)[row][col] = rowColAdd(a, b, row, col);
 
         if (col == 2)
         {
             row++;
+        }
+    }
+
+    for (size_t r = 0; r < ROWS; r++)
+    {
+        for (size_t c = 0; c < COLS; c++)
+        {
+            (*a)[r][c] = (*result)[r][c];
         }
     }
 }
@@ -203,7 +200,7 @@ float rowColAdd(const fMatrix const *a, const fMatrix const *b, const size_t row
     float sum = 0;
     for (size_t ix = 0; ix < 3; ix++)
     {
-        sum += *a[row][ix] * *b[ix][col];
+        sum += (*a)[row][ix] * (*b)[ix][col];
     }
     return sum;
 }
